@@ -1,9 +1,67 @@
 <html>
     <head>
-        Home
+        <style>
+            body {
+                background-image: linear-gradient(to right, purple, red);
+                align-items: center;
+                justify-content: center;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .box-section {
+                padding: 10px;
+                background-color: white;
+                width: 400px;
+                border: none;
+                border-radius: 10px;
+                box-shadow: 10cap;
+                margin-bottom: 10px;
+            }
+        </style>
     </head>
 
     <body>
-        <h1>Hello there</h1>
+        <header class="box-section">
+            <h1>Hello there</h1>
+
+            <div>
+                <form action="{% url 'home' %}" method="GET">
+                    <input type="text" name="q" placeholder="Seasarching..." />
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </header>
+        <main class="box-section">
+            <div id="gallery">
+                {% if products %} {% for product in products %}
+                <a href="{% url 'product_detail' product.pk %}">
+                    <div class="product-card">
+                        <h3>{{ product.name }}</h3>
+                        <p>Price: {{ product.price }} VND</p>
+                        {% if product.promo_price %}
+                        <p>Promo: {{ product.promo_price }} VND</p>
+                        {% endif %}
+                        <form
+                            action="{% url 'cart_add' product.id %}"
+                            method="post"
+                        >
+                            <label for="quantity">Quantity:</label>
+                            <input
+                                type="number"
+                                name="quantity"
+                                value="1"
+                                ,
+                                min="1"
+                            />
+                            <button type="submit">Add to Cart</button>
+                        </form>
+                    </div>
+                </a>
+                {% endfor %} {% else %}
+                <p>No products foudn</p>
+                {% endif %}
+            </div>
+        </main>
     </body>
 </html>

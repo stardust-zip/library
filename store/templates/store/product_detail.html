@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>Detail</title>
+    </head>
+    <body>
+        <div id="detail">
+            <h3>{{ product.name }}</h3>
+            <p>Description</p>
+            <p>{{ product.description }}</p>
+            {% if product.promo_price %}
+            <p>Price: {{ product.promo_price }} <s>{{ product.price }}</s></p>
+            {% else %}
+            <p>Price: {{ product.price }}</p>
+            {% endif %}
+        </div>
+    </body>
+</html>
